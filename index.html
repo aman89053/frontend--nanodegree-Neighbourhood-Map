@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title> Neighborhood Map</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/style.css">
+   </head>
+   <body>
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-md-3">
+               <div class="row site-header">
+                  <div class="col-md-12">
+                     <header class="">
+                        <h1>MADHYAPRADESH TOURISM MAP</h1>
+                        <form>
+                           <div class="form-group">
+                              <label for="searchbar">Search place</label>
+                              <input type="text" name="searchbar" id="searchbar" class="form-control" data-bind="value: searchText, valueUpdate: 'afterkeydown', event: {keyup: filterList}" placeholder="Name of place">
+                           </div>
+                        </form>
+                     </header>
+                  </div>
+               </div>
+               <div>
+                  <ul data-bind="foreach: mapArray" class="main-nav">
+                     <li class="main-nav-item col-md-12 col-sm-6" data-bind="css: {active: selected},text: title, click: $parent.setSelected, visible:show"></li>
+                  </ul>
+               </div>
+            </div>
+            <div class="col-md-9">
+               <div class="row">
+                  <div class="col-sm-12" id="map"></div>
+                  <div id="map-error">
+                     <h4 data-bind="text: errorDisplay"></h4>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-12">
+                     <h4>Madhya Pradesh, a large state in central India, retains landmarks from eras throughout Indian history. Begun in the 10th century, its Hindu and Jain temples at Khajuraho are renowned for their carvings of erotic scenes, most prominently Kandariya Mahadeva, a temple with more than 800 sculptures.The eastern Bandhavgarh and Kanha national parks, noted Bengal tiger sanctuaries, offer guided safaris.</h4>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      </script>
+      <script src="js/jquery.min.js"></script>
+      <script src="js/knockout.js"></script>
+      <script src="js/app.js"></script>
+      <script>
+         var map, infoWindow;
+         
+         function initMap() {
+             map = new google.maps.Map(
+                 document.getElementById('map'), {
+                     center: {
+                         lat: 22.9734,
+                         lng: 78.6569
+                     },
+                     zoom: 7,
+                     mapTypeControl: false
+                 }
+             );
+             infowindow = new google.maps.InfoWindow();
+         
+             ko.applyBindings(new model());
+         }
+         
+         function mapError() {
+             document.getElementById('map-error').innerHTML = "Error in Map!";
+         }
+      </script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzzzwjsm-nwDgiIT1VqwdKuXtH4rIq4-8&callback=initMap" onerror="mapError()" async defer></script>
+   </body>
+</html>
